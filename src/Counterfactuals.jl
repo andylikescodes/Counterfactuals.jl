@@ -9,6 +9,6 @@ using StatsBase
 # Write your package code here.
 include("models.jl")
 
-export ip_weighting
+export cal_ipw
 
 end
