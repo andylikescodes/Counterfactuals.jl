@@ -9,6 +9,6 @@ using StatsBase
 # Write your package code here.
 include("models.jl")
 
-export cal_ipw
+export cal_ipw, estimate_ipw
 
 end
