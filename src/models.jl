@@ -10,5 +10,5 @@ function cal_ipw(data, adjustments, second_degree_terms, treatment)
     data[!, "w"] = 1 .- pred
     data[data[!, treatment] .= 1, "w"] = pred
     
-    #data[!, target*"_lq_weighted"] = data[!, target] .* data[!, "w"]
+    return fit
 end
