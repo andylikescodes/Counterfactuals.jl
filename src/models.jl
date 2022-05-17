@@ -37,6 +37,6 @@ function estimate_ipw(data, adjustments, second_degree_terms, treatment, target,
     
     end
 
-    return effects
+    return effects, mean(effects), [percentile(effects, 2.5), percentile(effects, 97.5)]
 
 end

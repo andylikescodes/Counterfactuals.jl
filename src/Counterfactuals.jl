@@ -5,6 +5,7 @@ using CSV
 using DataFrames
 using GLM
 using StatsBase
+using Statistics
 
 # Write your package code here.
 include("models.jl")
