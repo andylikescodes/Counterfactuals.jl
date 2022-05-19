@@ -10,6 +10,6 @@ using Statistics
 # Write your package code here.
 include("models.jl")
 
-export cal_ipw, estimate_ipw, standardization, estimate_standardization
+export cal_ipw, estimate_ipw, standardization, estimate_standardization, estimate_doubly_robust, CI
 
 end
