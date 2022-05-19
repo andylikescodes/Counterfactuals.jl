@@ -144,12 +144,12 @@ function estimate_doubly_robust(data, adjustments, second_degree_terms, treatmen
     end
 end
 
-function CI(effects)
+function CI(effects, p)
     Non_NA_vec = effects[.!isnan.(effects)]
     println("Original runs: "*string(length(effects)))
     println("Non NA runs: "*string(length(Non_NA_vec)))
 
     mean_value = mean(Non_NA_vec)
-    CI = [percentile(Non_NA_vec, 2.5), percentile(Non_NA_vec, 97.5)]
+    CI = [percentile(Non_NA_vec, 2.5/p), percentile(Non_NA_vec, 97.5/p)]
     return mean_value, CI
 end
