@@ -40,3 +40,45 @@ function estimate_ipw(data, adjustments, second_degree_terms, treatment, target,
     return effects
 
 end
+
+function standardization(data, adjustments, second_degree_terms, treatment, target)
+
+    for term in second_degree_terms
+        data[!, term*"^2"] = data[!, term] .^ 2
+    end
+
+    block1 = copy(data)
+    block1[!, treatment] .= 1
+
+    block2 = copy(data)
+    block2[!, treatment] .= 0
+
+    fit = lm(Term(Symbol(target)) ~ Term(Symbol(treatment)) + sum(Term.(Symbol.(adjustments))) + sum(Term.(Symbol.(second_degree_terms.*"^2"))) + sum([Term(Symbol(treatment))&Term(Symbol(var)) for var in adjustments]), data) 
+    #fit = lm(Term(Symbol(target)) ~ Term(Symbol(treatment)) + sum(Term.(Symbol.(adjustments))) + sum(Term.(Symbol.(second_degree_terms*"^2"))), data) 
+
+    pred_1 = predict(fit, block1)
+    pred_2 = predict(fit, block2)
+
+    effect = mean(pred_1) - mean(pred_2)
+
+    return fit, effect
+
+end
+
+function estimate_standardization(data, adjustments, second_degree_terms, treatment, target, bootstrap)
+    effects = zeros(bootstrap)
+
+    for i in 1:bootstrap
+
+        sample_rows = sample(1:nrow(data), nrow(data), replace=true)
+
+        tmp_data = copy(data[sample_rows, :])
+
+        fit, effect = standardization(tmp_data, adjustments, second_degree_terms, treatment, target)
+
+        effects[i] = effect
+    
+    end
+
+    return effects
+end
