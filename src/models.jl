@@ -150,6 +150,6 @@ function CI(effects, p)
     println("Non NA runs: "*string(length(Non_NA_vec)))
 
     mean_value = mean(Non_NA_vec)
-    CI = [percentile(Non_NA_vec, 2.5/p), percentile(Non_NA_vec, 1-(2.5/p))]
+    CI = [percentile(Non_NA_vec, 2.5/p), percentile(Non_NA_vec, 100-(2.5/p))]
     return mean_value, CI
 end
